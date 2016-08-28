@@ -12,6 +12,11 @@ import {TypesOfMovements} from './enums/typesOfMovements';
   styleUrls: ['movement.component.css']
 })
 export class MovementComponent implements OnInit {
+  static order = {
+    ASC: 1,
+    DESC: -1
+  };
+
   public movement: Movement;
   public incomeCategories: string[];
   public expenditureCategories: string[];
@@ -19,6 +24,7 @@ export class MovementComponent implements OnInit {
   public order: number;
   public income: number;
   public expense: number;
+
   public balance: number;
 
   ngOnInit(): any {
@@ -28,6 +34,7 @@ export class MovementComponent implements OnInit {
     this.expense = 0;
     this.movement = new Movement();
     this.movements = [];
+    this.order = MovementComponent.order.ASC;
   }
 
   save(): void {
