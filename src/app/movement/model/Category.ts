@@ -1,3 +1,19 @@
-/**
- * Created by Andrea on 27/08/2016.
- */
+export default class Category {
+  static getIncomeCategories() {
+    return [
+      'Nómina',
+      'Venta',
+      'Interés',
+      'Impuesto'
+    ];
+  }
+
+  static getExpenditureCategories() {
+    return [
+      'Hipoteca',
+      'Compra',
+      'Interés',
+      'Impuesto'
+    ];
+  }
+}
