@@ -1,3 +1,80 @@
-<p>
-  movement works!
-</p>
+<h1>
+  movimiento works!
+</h1>
+<form>
+  <div>
+
+    <label>Tipo:
+      <input type="radio" [checked]="movementIsIncome()" name="type"
+             (change)="onChangeType($event)" [value]="getEntryValue()"/> Ingreso
+      <input type="radio" [checked]="!movementIsIncome()" name="type"
+             (change)="onChangeType($event)" [value]="getExpenseValue()" /> Gasto
+    </label>
+  </div>
+  <p></p>
+  <div>
+    <label>
+      Categoría:
+      <select [(ngModel)]="movement.category" *ngIf="movement.type === getEntryValue()">
+        <option *ngFor="let category of incomeCategories" [value]="category"  >{{category}}</option>
+      </select>
+      <select [(ngModel)]="movement.category" *ngIf="movement.type === getExpenseValue()">
+        <option *ngFor="let category of expenditureCategories" [value]="category"  >{{category}}</option>
+      </select>
+    </label>
+
+  </div>
+  <p></p>
+  <div>
+    <label>
+      Fecha:
+      <input type="date" [(ngModel)]="movement.date">
+    </label>
+  </div>
+  <p></p>
+  <div>
+    <label>
+      Importe:
+      <input type="number" [(ngModel)]="movement.amount">
+    </label>
+  </div>
+  <button (click)="save()">
+    Guardar Movimento
+  </button>
+</form>
+<hr/>
+<table class="table">
+  <thead>
+  <tr>
+    <th (click)="orderBy('date')">Fecha</th>
+    <th>Tipo</th>
+    <th>Categoría</th>
+    <th (click)="orderBy('amount')">Importe</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let m of movements">
+    <td class="text-left">{{getDate(m.date) | date:"dd-MM-yyyy"}}</td>
+    <td class="text-left">{{m.type}}</td>
+    <td class="text-left">{{m.category}}</td>
+    <td class="text-left"
+        [ngClass]="{positive: m.type === getEntryValue() , negative: m.type === getExpenseValue()}">
+      {{m.amount | number}} €
+    </td>
+  </tr>
+  </tbody>
+</table>
+<hr/>
+<div class="positive">
+  <span>Ingresos:</span>
+  <span>{{income}}</span>
+</div>
+<div class="negative">
+  <span>Gastos:</span>
+  <span>{{expense}}</span>
+</div>
+<p></p>
+<div [ngClass]="{positive: balance >=0 , negative: balance<0}">
+  <span>Balance:</span>
+  <span>{{balance}}</span>
+</div>
