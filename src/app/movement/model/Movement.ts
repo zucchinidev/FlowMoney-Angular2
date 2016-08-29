@@ -16,6 +16,19 @@ export class Movement implements IMovement {
   private _amount: number;
 
 
+  static getTypeText(type: number): string {
+    let txt = '';
+    switch (type) {
+      case TypesOfMovements.Entry:
+        txt = 'Ingreso'; // TODO: i18n
+        break;
+      default:
+        txt = 'Gasto';
+        break;
+    }
+    return txt;
+  }
+
   constructor({
     id = new Date().toDateString(),
     type = TypesOfMovements.Entry,
