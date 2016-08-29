@@ -74,8 +74,24 @@ export class MovementComponent implements OnInit {
     return TypesOfMovements.Expense;
   }
 
+  getTypeText(type: number): string {
+    return Movement.getTypeText(type);
+  }
+
+  getEntryText(): string {
+    return Movement.getTypeText(TypesOfMovements.Entry);
+  }
+
+  getExpenseText(): string {
+    return Movement.getTypeText(TypesOfMovements.Expense);
+  }
+
   onChangeType(event): void {
     this.movement.type = parseInt(event.currentTarget.value, 10);
+  }
+
+  isNegativeBalance(): boolean {
+    return this.balance < 0;
   }
 
   private calculateBalance() {

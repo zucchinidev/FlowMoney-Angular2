@@ -6,9 +6,9 @@
 
     <label>Tipo:
       <input type="radio" [checked]="movementIsIncome()" name="type"
-             (change)="onChangeType($event)" [value]="getEntryValue()"/> Ingreso
+             (change)="onChangeType($event)" [value]="getEntryValue()"/> {{getEntryText()}}
       <input type="radio" [checked]="!movementIsIncome()" name="type"
-             (change)="onChangeType($event)" [value]="getExpenseValue()" /> Gasto
+             (change)="onChangeType($event)" [value]="getExpenseValue()" /> {{getExpenseText()}}
     </label>
   </div>
   <p></p>
@@ -53,13 +53,13 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let m of movements">
-    <td class="text-left">{{getDate(m.date) | date:"dd-MM-yyyy"}}</td>
-    <td class="text-left">{{m.type}}</td>
-    <td class="text-left">{{m.category}}</td>
+  <tr *ngFor="let movement of movements">
+    <td class="text-left">{{getDate(movement.date) | date:"dd-MM-yyyy"}}</td>
+    <td class="text-left">{{getTypeText(movement.type)}}</td>
+    <td class="text-left">{{movement.category}}</td>
     <td class="text-left"
-        [ngClass]="{positive: m.type === getEntryValue() , negative: m.type === getExpenseValue()}">
-      {{m.amount | number}} €
+        [ngClass]="{positive: movement.type === getEntryValue() , negative: movement.type === getExpenseValue()}">
+      {{movement.amount | number}} €
     </td>
   </tr>
   </tbody>
@@ -74,7 +74,7 @@
   <span>{{expense}}</span>
 </div>
 <p></p>
-<div [ngClass]="{positive: balance >=0 , negative: balance<0}">
+<div [ngClass]="{positive: !isNegativeBalance() , negative: isNegativeBalance()}">
   <span>Balance:</span>
   <span>{{balance}}</span>
 </div>
