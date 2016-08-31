@@ -4,9 +4,9 @@
 <form>
   <div>
     <label>Tipo:
-      <input type="radio" [checked]="movementIsIncome()" name="type"
+      <input type="radio" [checked]="movement.isIncome()" name="type"
              (change)="onChangeType($event)" [value]="getEntryValue()"/> {{getEntryText()}}
-      <input type="radio" [checked]="!movementIsIncome()" name="type"
+      <input type="radio" [checked]="!movement.isIncome()" name="type"
              (change)="onChangeType($event)" [value]="getExpenseValue()"/> {{getExpenseText()}}
     </label>
   </div>

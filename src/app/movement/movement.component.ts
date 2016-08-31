@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-
-import Category from './model/Category';
-import {Movement} from './model/Movement';
-import {TypesOfMovements} from './enums/typesOfMovements';
+import {TypesOfMovements} from '../shared/enums/typesOfMovements';
+import {MovementService, MovementModel} from '../shared';
 
 
 @Component({
   moduleId: module.id,
   selector: 'app-movement',
   templateUrl: 'movement.component.html',
-  styleUrls: ['movement.component.css']
+  styleUrls: ['movement.component.css'],
+  providers: [MovementService]
 })
 export class MovementComponent implements OnInit {
   static order = {
@@ -17,40 +16,33 @@ export class MovementComponent implements OnInit {
     DESC: -1
   };
 
-  public movement: Movement;
+  public movement: MovementModel;
   public incomeCategories: string[];
   public expenditureCategories: string[];
-  public movements: Movement[];
+  public movements: MovementModel[];
   public order: number;
   public income: number;
   public expense: number;
-
   public balance: number;
 
+  constructor(private movementService: MovementService) {
+
+  }
+
   ngOnInit(): any {
-    this.incomeCategories = Category.getIncomeCategories();
-    this.expenditureCategories = Category.getExpenditureCategories();
-    this.income = 0;
-    this.expense = 0;
-    this.movement = new Movement();
+    this.incomeCategories = this.movementService.incomeCategories;
+    this.expenditureCategories = this.movementService.expenditureCategories;
+    this.movement = new MovementModel();
     this.movements = [];
     this.order = MovementComponent.order.ASC;
   }
 
   save(): void {
-    if (this.movement.isIncome()) {
-      this.income += this.movement.amount;
-    } else {
-      this.expense += this.movement.amount;
-    }
-    this.balance = this.calculateBalance();
-    this.movements.push(new Movement({
-      type: this.movement.type,
-      id: this.movement.id,
-      category: this.movement.category,
-      date: this.movement.date,
-      amount: this.movement.amount
-    }));
+    this.movementService.registerMovement(this.movement);
+    this.income = this.movementService.income;
+    this.expense = this.movementService.expense;
+    this.balance = this.movementService.balance;
+    this.movements.push(MovementModel.createFromMovement(this.movement));
   }
 
   orderBy(field: string): void {
@@ -62,10 +54,6 @@ export class MovementComponent implements OnInit {
     return new Date(stringDate);
   }
 
-  movementIsIncome() {
-    return this.movement.isIncome();
-  }
-
   getEntryValue(): number {
     return TypesOfMovements.Entry;
   }
@@ -75,15 +63,15 @@ export class MovementComponent implements OnInit {
   }
 
   getTypeText(type: number): string {
-    return Movement.getTypeText(type);
+    return MovementModel.getTypeText(type);
   }
 
   getEntryText(): string {
-    return Movement.getTypeText(TypesOfMovements.Entry);
+    return this.getTypeText(TypesOfMovements.Entry);
   }
 
   getExpenseText(): string {
-    return Movement.getTypeText(TypesOfMovements.Expense);
+    return this.getTypeText(TypesOfMovements.Expense);
   }
 
   onChangeType(event): void {
@@ -91,10 +79,6 @@ export class MovementComponent implements OnInit {
   }
 
   isNegativeBalance(): boolean {
-    return this.balance < 0;
-  }
-
-  private calculateBalance() {
-    return this.income - this.expense;
+    return this.movementService.isNegativeBalance();
   }
 }
