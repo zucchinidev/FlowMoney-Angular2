@@ -3,12 +3,11 @@
 </h1>
 <form>
   <div>
-
     <label>Tipo:
       <input type="radio" [checked]="movementIsIncome()" name="type"
              (change)="onChangeType($event)" [value]="getEntryValue()"/> {{getEntryText()}}
       <input type="radio" [checked]="!movementIsIncome()" name="type"
-             (change)="onChangeType($event)" [value]="getExpenseValue()" /> {{getExpenseText()}}
+             (change)="onChangeType($event)" [value]="getExpenseValue()"/> {{getExpenseText()}}
     </label>
   </div>
   <p></p>
@@ -16,15 +15,13 @@
     <label>
       Categoría:
       <select [(ngModel)]="movement.category" *ngIf="movement.type === getEntryValue()">
-        <option *ngFor="let category of incomeCategories" [value]="category"  >{{category}}</option>
+        <option *ngFor="let category of incomeCategories" [value]="category">{{category}}</option>
       </select>
       <select [(ngModel)]="movement.category" *ngIf="movement.type === getExpenseValue()">
-        <option *ngFor="let category of expenditureCategories" [value]="category"  >{{category}}</option>
+        <option *ngFor="let category of expenditureCategories" [value]="category">{{category}}</option>
       </select>
     </label>
-
   </div>
-  <p></p>
   <div>
     <label>
       Fecha:
@@ -73,7 +70,6 @@
   <span>Gastos:</span>
   <span>{{expense}}</span>
 </div>
-<p></p>
 <div [ngClass]="{positive: !isNegativeBalance() , negative: isNegativeBalance()}">
   <span>Balance:</span>
   <span>{{balance}}</span>
