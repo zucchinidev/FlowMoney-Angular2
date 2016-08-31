@@ -1,5 +1,5 @@
-export default class Category {
-  static getIncomeCategories() {
+export class Category {
+  static getIncomeCategories(): string[] {
     return [
       'Nómina',
       'Venta',
@@ -8,7 +8,7 @@ export default class Category {
     ];
   }
 
-  static getExpenditureCategories() {
+  static getExpenditureCategories(): string[] {
     return [
       'Hipoteca',
       'Compra',

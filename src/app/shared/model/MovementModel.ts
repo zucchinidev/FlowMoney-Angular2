@@ -8,7 +8,7 @@ interface IMovement {
   amount: number;
 }
 
-export class Movement implements IMovement {
+export class MovementModel implements IMovement {
   private _id: string;
   private _type: TypesOfMovements;
   private _category: string;
@@ -27,6 +27,16 @@ export class Movement implements IMovement {
         break;
     }
     return txt;
+  }
+
+  static createFromMovement(movement): MovementModel {
+    return new MovementModel({
+      type: movement.type,
+      id: movement.id,
+      category: movement.category,
+      date: movement.date,
+      amount: movement.amount
+    });
   }
 
   constructor({
@@ -92,5 +102,4 @@ export class Movement implements IMovement {
   isIncome(): boolean {
     return this.type === TypesOfMovements.Entry;
   }
-
 }
