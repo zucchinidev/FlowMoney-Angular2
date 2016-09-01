@@ -1,12 +1,5 @@
 import {TypesOfMovements} from '../enums/typesOfMovements';
-
-interface IMovement {
-  id: string;
-  type: TypesOfMovements;
-  category: string;
-  date: Date;
-  amount: number;
-}
+import {IMovement} from './interfaces';
 
 export class MovementModel implements IMovement {
   private _id: string;
@@ -29,7 +22,7 @@ export class MovementModel implements IMovement {
     return txt;
   }
 
-  static createFromMovement(movement): MovementModel {
+  static createFromMovement(movement: MovementModel): MovementModel {
     return new MovementModel({
       type: movement.type,
       id: movement.id,
