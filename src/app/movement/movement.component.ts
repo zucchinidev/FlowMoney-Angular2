@@ -8,14 +8,9 @@ import {MovementService, MovementModel} from '../shared';
   selector: 'app-movement',
   templateUrl: 'movement.component.html',
   styleUrls: ['movement.component.css'],
-  providers: [MovementService]
+  providers: [MovementService] // TODO provide MovementModel
 })
 export class MovementComponent implements OnInit {
-  static order = {
-    ASC: 1,
-    DESC: -1
-  };
-
   public movement: MovementModel;
   public incomeCategories: string[];
   public expenditureCategories: string[];
@@ -32,9 +27,9 @@ export class MovementComponent implements OnInit {
   ngOnInit(): any {
     this.incomeCategories = this.movementService.incomeCategories;
     this.expenditureCategories = this.movementService.expenditureCategories;
-    this.movement = new MovementModel();
-    this.movements = [];
-    this.order = MovementComponent.order.ASC;
+    this.movement = this.movementService.movement;
+    this.movements = this.movementService.movements;
+    this.order = MovementService.ORDER.ASC;
   }
 
   save(): void {
@@ -42,12 +37,11 @@ export class MovementComponent implements OnInit {
     this.income = this.movementService.income;
     this.expense = this.movementService.expense;
     this.balance = this.movementService.balance;
-    this.movements.push(MovementModel.createFromMovement(this.movement));
   }
 
   orderBy(field: string): void {
     this.order = -1 * this.order;
-    this.movements.sort((a, b) => a[field] < b[field] ? this.order : -1 * this.order);
+    this.movementService.sortMovements(field, this.order);
   }
 
   getDate(stringDate: string): Date {
