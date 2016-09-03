@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {TypesOfMovements, MovementModel, Category} from './';
 
 @Injectable()
@@ -15,11 +15,6 @@ export class MovementService {
   public incomeCategories: string[];
   public expenditureCategories: string[];
   public movements: MovementModel[];
-  public movement: MovementModel;
-
-  private static createEmptyMovement() {
-    return new MovementModel();
-  }
 
   constructor() {
     this.income = 0;
@@ -27,7 +22,6 @@ export class MovementService {
     this.balance = 0;
     this.incomeCategories = Category.getIncomeCategories();
     this.expenditureCategories = Category.getExpenditureCategories();
-    this.movement = MovementService.createEmptyMovement();
     this.movements = [];
   }
 
@@ -37,8 +31,7 @@ export class MovementService {
       const amount = movement.amount;
       this.annotateAmount(amount, type);
       this.calculateBalance();
-      this.movements.push(MovementModel.createFromMovement(movement));
-      this.movement = MovementService.createEmptyMovement();
+      this.movements.push();
     } catch (e) {
       // TODO SERVICE ERROR, WRITE LOGS ERRORS BACKEND
     }
