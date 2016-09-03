@@ -3,11 +3,11 @@ import {MovementComponent} from './movement/movement.component';
 
 @Component({
   moduleId: module.id,
-  selector: 'flow-money',
-  templateUrl: 'flow-money.component.html',
-  styleUrls: ['flow-money.component.css'],
+  selector: 'app-root',
+  templateUrl: 'app-root.component.html',
+  styleUrls: ['app-root.component.css'],
   directives: [MovementComponent]
 })
 export class FlowMoneyComponent {
-  title = 'flow-money works!';
+  title = 'app works!';
 }

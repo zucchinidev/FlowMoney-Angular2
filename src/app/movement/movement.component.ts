@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, provide} from '@angular/core';
 import {TypesOfMovements} from '../shared/enums/typesOfMovements';
 import {MovementService, MovementModel} from '../shared';
 
@@ -8,10 +8,12 @@ import {MovementService, MovementModel} from '../shared';
   selector: 'app-movement',
   templateUrl: 'movement.component.html',
   styleUrls: ['movement.component.css'],
-  providers: [MovementService] // TODO provide MovementModel
+  providers: [
+    provide(MovementService, {useClass: MovementService}),
+    provide(MovementModel, {useFactory: () => MovementModel.create()})
+  ]
 })
 export class MovementComponent implements OnInit {
-  public movement: MovementModel;
   public incomeCategories: string[];
   public expenditureCategories: string[];
   public movements: MovementModel[];
@@ -20,14 +22,13 @@ export class MovementComponent implements OnInit {
   public expense: number;
   public balance: number;
 
-  constructor(private movementService: MovementService) {
+  constructor(private movementService: MovementService, public movement: MovementModel) {
 
   }
 
   ngOnInit(): any {
     this.incomeCategories = this.movementService.incomeCategories;
     this.expenditureCategories = this.movementService.expenditureCategories;
-    this.movement = this.movementService.movement;
     this.movements = this.movementService.movements;
     this.order = MovementService.ORDER.ASC;
   }
@@ -37,6 +38,7 @@ export class MovementComponent implements OnInit {
     this.income = this.movementService.income;
     this.expense = this.movementService.expense;
     this.balance = this.movementService.balance;
+    this.movement = MovementModel.create();
   }
 
   orderBy(field: string): void {
