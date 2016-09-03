@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { addProviders, async, inject } from '@angular/core/testing';
-import { FlowMoneyComponent } from './flow-money.component';
+import { FlowMoneyComponent } from './app-root.component';
 
 describe('App: FlowMoney', () => {
   beforeEach(() => {
