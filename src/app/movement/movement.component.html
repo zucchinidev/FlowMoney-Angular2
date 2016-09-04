@@ -1,44 +1,8 @@
 <h1>
   movimiento works!
 </h1>
-<form>
-  <div>
-    <label>Tipo:
-      <input type="radio" [checked]="movement.isIncome()" name="type"
-             (change)="onChangeType($event)" [value]="getEntryValue()"/> {{getEntryText()}}
-      <input type="radio" [checked]="!movement.isIncome()" name="type"
-             (change)="onChangeType($event)" [value]="getExpenseValue()"/> {{getExpenseText()}}
-    </label>
-  </div>
-  <p></p>
-  <div>
-    <label>
-      Categoría:
-      <select [(ngModel)]="movement.category" *ngIf="movement.type === getEntryValue()">
-        <option *ngFor="let category of incomeCategories" [value]="category">{{category}}</option>
-      </select>
-      <select [(ngModel)]="movement.category" *ngIf="movement.type === getExpenseValue()">
-        <option *ngFor="let category of expenditureCategories" [value]="category">{{category}}</option>
-      </select>
-    </label>
-  </div>
-  <div>
-    <label>
-      Fecha:
-      <input type="date" [(ngModel)]="movement.date">
-    </label>
-  </div>
-  <p></p>
-  <div>
-    <label>
-      Importe:
-      <input type="number" [(ngModel)]="movement.amount">
-    </label>
-  </div>
-  <button (click)="save()">
-    Guardar Movimento
-  </button>
-</form>
+<app-editor [movement]="movement"></app-editor>
+
 <hr/>
 <table class="table">
   <thead>
@@ -55,7 +19,7 @@
     <td class="text-left">{{getTypeText(movement.type)}}</td>
     <td class="text-left">{{movement.category}}</td>
     <td class="text-left"
-        [ngClass]="{positive: movement.type === getEntryValue() , negative: movement.type === getExpenseValue()}">
+        [ngClass]="{positive: movement.type === typeEntry , negative: movement.type === typeExpense}">
       {{movement.amount | number}} €
     </td>
   </tr>
@@ -64,13 +28,13 @@
 <hr/>
 <div class="positive">
   <span>Ingresos:</span>
-  <span>{{income}}</span>
+  <span>{{accountingCost.income}}</span>
 </div>
 <div class="negative">
   <span>Gastos:</span>
-  <span>{{expense}}</span>
+  <span>{{accountingCost.expense}}</span>
 </div>
 <div [ngClass]="{positive: !isNegativeBalance() , negative: isNegativeBalance()}">
   <span>Balance:</span>
-  <span>{{balance}}</span>
+  <span>{{accountingCost.balance}}</span>
 </div>
