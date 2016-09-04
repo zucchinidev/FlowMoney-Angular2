@@ -1,6 +1,14 @@
 # FlowMoney
 
+## Synopsis
+
+Application for managing an efficient flow of money using the stack mean 
+(**Mongo + Mongoose, Express, Angular 2 and NodeJS**) + **TypeScript**
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.10.
+
+## Motivation
+
+ To learn about development with **NodeJS** & **Angular 2** using **TypeScript**
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
