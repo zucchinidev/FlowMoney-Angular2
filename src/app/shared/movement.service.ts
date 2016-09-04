@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TypesOfMovements, MovementModel, Category} from './';
+import {IAccountingCost} from './intefaces/IAccountingCost';
 
 @Injectable()
 export class MovementService {
@@ -9,20 +10,36 @@ export class MovementService {
     DESC: -1
   };
 
-  public income: number;
-  public expense: number;
-  public balance: number;
+  public accountingCost: IAccountingCost;
   public incomeCategories: string[];
   public expenditureCategories: string[];
   public movements: MovementModel[];
+  public typeEntry: TypesOfMovements;
+  public typeExpense: TypesOfMovements;
+
+  static getEntryText(): string {
+    return MovementService.getTypeText(TypesOfMovements.Entry);
+  }
+
+  static getExpenseText(): string {
+    return MovementService.getTypeText(TypesOfMovements.Expense);
+  }
+
+  static getTypeText(type: number): string {
+    return MovementModel.getTypeText(type);
+  }
 
   constructor() {
-    this.income = 0;
-    this.expense = 0;
-    this.balance = 0;
     this.incomeCategories = Category.getIncomeCategories();
     this.expenditureCategories = Category.getExpenditureCategories();
     this.movements = [];
+    this.typeEntry = TypesOfMovements.Entry;
+    this.typeExpense = TypesOfMovements.Expense;
+    this.accountingCost = {
+      income: 0,
+      expense: 0,
+      balance: 0
+    };
   }
 
   registerMovement(movement: MovementModel): void {
@@ -31,14 +48,14 @@ export class MovementService {
       const amount = movement.amount;
       this.annotateAmount(amount, type);
       this.calculateBalance();
-      this.movements.push();
+      this.movements.push(Object.assign({}, movement));
     } catch (e) {
       // TODO SERVICE ERROR, WRITE LOGS ERRORS BACKEND
     }
   }
 
   isNegativeBalance(): boolean {
-    return this.balance < 0;
+    return this.accountingCost.balance < 0;
   }
 
   private annotateAmount(amount: number, type: TypesOfMovements) {
@@ -55,15 +72,15 @@ export class MovementService {
   }
 
   private annotateExpense(amount: number) {
-    this.expense += amount;
+    this.accountingCost.expense += amount;
   }
 
   private annotateIncome(amount: number) {
-    this.income += amount;
+    this.accountingCost.income += amount;
   }
 
   private calculateBalance() {
-    this.balance = this.income - this.expense;
+    this.accountingCost.balance = this.accountingCost.income - this.accountingCost.expense;
   }
 
   sortMovements(field: string, order?: number) {
