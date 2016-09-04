@@ -48,7 +48,7 @@ export class MovementService {
       const amount = movement.amount;
       this.annotateAmount(amount, type);
       this.calculateBalance();
-      this.movements.push(Object.assign({}, movement));
+      this.movements.push(MovementModel.createFromMovement(movement));
     } catch (e) {
       // TODO SERVICE ERROR, WRITE LOGS ERRORS BACKEND
     }
@@ -56,6 +56,10 @@ export class MovementService {
 
   isNegativeBalance(): boolean {
     return this.accountingCost.balance < 0;
+  }
+
+  isEntry(type): boolean {
+    return type === this.typeEntry;
   }
 
   private annotateAmount(amount: number, type: TypesOfMovements) {
