@@ -2,29 +2,8 @@
   movimiento works!
 </h1>
 <app-editor [movement]="movement"></app-editor>
-
 <hr/>
-<table class="table">
-  <thead>
-  <tr>
-    <th (click)="orderBy('date')">Fecha</th>
-    <th>Tipo</th>
-    <th>Categoría</th>
-    <th (click)="orderBy('amount')">Importe</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let movement of movements">
-    <td class="text-left">{{getDate(movement.date) | date:"dd-MM-yyyy"}}</td>
-    <td class="text-left">{{getTypeText(movement.type)}}</td>
-    <td class="text-left">{{movement.category}}</td>
-    <td class="text-left"
-        [ngClass]="{positive: movement.type === typeEntry , negative: movement.type === typeExpense}">
-      {{movement.amount | number}} €
-    </td>
-  </tr>
-  </tbody>
-</table>
+<app-list (selectMovement)="onSelectMovement($event)"></app-list>
 <hr/>
 <div class="positive">
   <span>Ingresos:</span>
