@@ -1,3 +1,5 @@
-/**
- * Created by Andrea on 04/09/2016.
- */
+export interface IAccountingCost {
+  income: number;
+  expense: number;
+  balance: number;
+}
