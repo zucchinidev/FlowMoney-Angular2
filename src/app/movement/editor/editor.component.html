@@ -1,0 +1,38 @@
+<form>
+  <div>
+    <label>Tipo:
+      <input type="radio" [checked]="movement.isIncome()" name="type"
+             (change)="onChangeType($event)" [value]="typeEntry"/> {{getEntryText()}}
+      <input type="radio" [checked]="!movement.isIncome()" name="type"
+             (change)="onChangeType($event)" [value]="typeExpense"/> {{getExpenseText()}}
+    </label>
+  </div>
+  <p></p>
+  <div>
+    <label>
+      Categoría:
+      <select [(ngModel)]="movement.category" *ngIf="movement.type === typeEntry">
+        <option *ngFor="let category of incomeCategories" [value]="category">{{category}}</option>
+      </select>
+      <select [(ngModel)]="movement.category" *ngIf="movement.type === typeExpense">
+        <option *ngFor="let category of expenditureCategories" [value]="category">{{category}}</option>
+      </select>
+    </label>
+  </div>
+  <div>
+    <label>
+      Fecha:
+      <input type="date" [(ngModel)]="movement.date">
+    </label>
+  </div>
+  <p></p>
+  <div>
+    <label>
+      Importe:
+      <input type="number" [(ngModel)]="movement.amount">
+    </label>
+  </div>
+  <button (click)="save()">
+    Guardar Movimento
+  </button>
+</form>
