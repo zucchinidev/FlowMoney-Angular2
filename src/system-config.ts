@@ -37,6 +37,7 @@ const barrels: string[] = [
   'app',
   'app/shared',
   'app/movement',
+  'app/movement/editor',
   /** @cli-barrel */
 ];
 
