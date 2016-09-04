@@ -11,4 +11,11 @@ describe('flow-money App', function() {
     page.navigateTo();
     expect(page.getParagraphText()).toEqual('app works!');
   });
+
+  describe('app-movement is present', function () {
+    it('should display message saying movimiento works!', () => {
+      page.navigateTo();
+      expect(page.getMovementHeaderText()).toEqual('movimiento works!');
+    });
+  });
 });
