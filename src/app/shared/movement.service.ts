@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TypesOfMovements, MovementModel, Category} from './';
-import {IAccountingCost} from './intefaces/IAccountingCost';
+import {IAccountingCost} from './intefaces';
 
 @Injectable()
 export class MovementService {
