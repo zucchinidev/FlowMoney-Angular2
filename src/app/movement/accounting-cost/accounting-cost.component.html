@@ -1,0 +1,15 @@
+<p>
+  accounting-cost works!
+</p>
+<div class="positive">
+  <span>Ingresos:</span>
+  <span>{{accountingCost.income}}</span>
+</div>
+<div class="negative">
+  <span>Gastos:</span>
+  <span>{{accountingCost.expense}}</span>
+</div>
+<div [ngClass]="{positive: !isNegativeBalance() , negative: isNegativeBalance()}">
+  <span>Balance:</span>
+  <span>{{accountingCost.balance}}</span>
+</div>

@@ -29,6 +29,7 @@ export class EditorComponent implements OnInit {
 
 
   save(): void {
+    // TODO edit movement.
     this.movementService.registerMovement(this.movement);
     this.movement = MovementModel.create();
   }
